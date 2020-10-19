@@ -104,7 +104,7 @@ namespace TokenClient.Common
         /// <returns></returns>
         public static TokenResultMsg GetSignToken(int staffId)
         {
-            string tokenApi = "http://localhost:5000/api/TokenService/GetToken";
+            string tokenApi = "http://localhost:56086/api/TokenService/GetToken";
             Dictionary<string, string> parames = new Dictionary<string, string>();
             parames.Add("staffId", staffId.ToString());
             Tuple<string, string> parameters = GetQueryString(parames);

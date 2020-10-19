@@ -26,8 +26,8 @@ namespace TokenAndSignature.Controllers
         }
 
 
-        [HttpPost("AddProudct")]
-        public ActionResult<ResultMsg> AddProudct(Product product)
+        [HttpPost("AddProduct")]
+        public ActionResult<ResultMsg> AddProduct([FromBody]Product product)
         {
             ResultMsg resultMsg = null;
             resultMsg = new ResultMsg();

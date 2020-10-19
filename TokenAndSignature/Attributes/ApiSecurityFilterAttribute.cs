@@ -121,8 +121,15 @@ namespace TokenAndSignature.Attributes
                 case "POST":
                     Stream stream =context.HttpContext.Request.Body;
                     string responseJson = string.Empty;
-                    StreamReader streamReader = new StreamReader(stream);
-                    data = streamReader.ReadToEnd();
+                    if (stream != null)
+                    {
+                        stream.Seek(0, SeekOrigin.Begin);
+                        using (var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true))
+                        {
+                            data =  reader.ReadToEnd();
+                        }
+                        stream.Seek(0, SeekOrigin.Begin);
+                    }
                     break;
                 case "GET":
                     //第一步：取出所有get参数

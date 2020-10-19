@@ -19,9 +19,9 @@ namespace TokenClient
             parames.Add("id", "1");
             parames.Add("name", "wahaha");
             Tuple<string, string> parameters = WebApiHelper.GetQueryString(parames);
-            var product1 = WebApiHelper.Get<ProductResultMsg>("http://localhost:5000/api/product/getproduct", parameters.Item1, parameters.Item2, staffId);
+            var product1 = WebApiHelper.Get<ProductResultMsg>("http://localhost:56086/api/product/getproduct", parameters.Item1, parameters.Item2, staffId);
             Product product = new Product() { Id = 1, Name = "安慕希", Count = 10, Price = 58.8 };
-            var product2 = WebApiHelper.Post<ProductResultMsg>("http://localhost:5000/api/product/addProduct", JsonConvert.SerializeObject(product), staffId);
+            var product2 = WebApiHelper.Post<ProductResultMsg>("http://localhost:56086/api/product/AddProduct", JsonConvert.SerializeObject(product), staffId);
             Console.Read();
 
 
