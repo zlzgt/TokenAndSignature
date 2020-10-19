@@ -53,7 +53,7 @@ namespace TokenAndSignature.Attributes
                     resultMsg.StatusCode = (int)StatusCodeEnum.ParameterError;
                     resultMsg.Info = StatusCodeEnum.ParameterError.GetEnumText();
                     resultMsg.Data = "";
-                    context.Result =new JsonResult(resultMsg);
+                    context.Result = new JsonResult(resultMsg);
                     base.OnActionExecuting(context);
                     return;
                 }
@@ -72,17 +72,17 @@ namespace TokenAndSignature.Attributes
                 resultMsg.StatusCode = (int)StatusCodeEnum.ParameterError;
                 resultMsg.Info = StatusCodeEnum.ParameterError.GetEnumText();
                 resultMsg.Data = "";
-                context.Result = new JsonResult(resultMsg); 
+                context.Result = new JsonResult(resultMsg);
                 base.OnActionExecuting(context);
                 return;
             }
 
-           //判断timespan是否有效
+            //判断timespan是否有效
             double ts1 = 0;
             double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
             bool timespanvalidate = double.TryParse(timestamp, out ts1);
             double ts = ts2 - ts1;
-            bool falg = ts >120*1000;
+            bool falg = ts > 120 * 1000;
             if (falg || (!timespanvalidate))
             {
                 resultMsg = new ResultMsg();
@@ -119,14 +119,14 @@ namespace TokenAndSignature.Attributes
             switch (method)
             {
                 case "POST":
-                    Stream stream =context.HttpContext.Request.Body;
+                    Stream stream = context.HttpContext.Request.Body;
                     string responseJson = string.Empty;
                     if (stream != null)
                     {
                         stream.Seek(0, SeekOrigin.Begin);
                         using (var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true))
                         {
-                            data =  reader.ReadToEnd();
+                            data = reader.ReadToEnd();
                         }
                         stream.Seek(0, SeekOrigin.Begin);
                     }
@@ -135,7 +135,7 @@ namespace TokenAndSignature.Attributes
                     //第一步：取出所有get参数
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
-                    foreach(string item in form.Keys)
+                    foreach (string item in form.Keys)
                     {
                         parameters.Add(item, form[item]);
                     }
@@ -166,6 +166,7 @@ namespace TokenAndSignature.Attributes
                     return;
             }
 
+            // 校验签名是否正确
             bool result = SignExtension.Validate(timestamp, nonce, id, signtoken, data, signature);
             if (!result)
             {
@@ -173,6 +174,17 @@ namespace TokenAndSignature.Attributes
                 resultMsg.StatusCode = (int)StatusCodeEnum.HttpRequestError;
                 resultMsg.Info = StatusCodeEnum.HttpRequestError.GetEnumText();
                 resultMsg.Data = "";
+                context.Result = new JsonResult(resultMsg);
+                base.OnActionExecuting(context);
+                return;
+            }
+
+            //模型验证
+            if (!context.ModelState.IsValid)
+            {
+                resultMsg = new ResultMsg();
+                //throw new ApplicationException(context.ModelState.Values.First(p => p.Errors.Count > 0).Errors[0].ErrorMessage);
+                resultMsg.Info = context.ModelState.Values.First(p => p.Errors.Count > 0).Errors[0].ErrorMessage;
                 context.Result = new JsonResult(resultMsg);
                 base.OnActionExecuting(context);
                 return;
