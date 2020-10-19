@@ -27,6 +27,7 @@ namespace TokenAndSignature
             services.AddControllersWithViews(option =>
             {
                 option.Filters.Add<ApiSecurityFilterAttribute>();
+                option.Filters.Add<ApiExceptionFilterAttribute>();  // 添加全局异常捕获信息
             });
 
             // If using Kestrel:
