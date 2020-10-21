@@ -8,11 +8,19 @@ using TokenAndSignature.Models;
 
 namespace TokenAndSignature.Controllers
 {
+    /// <summary>
+    /// 产品控制器
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
 
+        /// <summary>
+        /// 获取商品信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("GetProduct")]
         public ActionResult<ResultMsg> GetProduct(string id)
         {
@@ -26,6 +34,11 @@ namespace TokenAndSignature.Controllers
         }
 
 
+        /// <summary>
+        /// 添加商品信息
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost("AddProduct")]
         public ActionResult<ResultMsg> AddProduct([FromBody]Product product)
         {

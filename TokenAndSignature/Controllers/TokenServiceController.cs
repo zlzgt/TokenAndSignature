@@ -11,6 +11,9 @@ using TokenAndSignature.Utils;
 
 namespace TokenAndSignature.Controllers
 {
+    /// <summary>
+    /// Token服务
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TokenServiceController : ControllerBase
