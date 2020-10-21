@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System;
 
-namespace TokenAndSignature.Tools
+namespace TokenAndSignature.Utils
 {
     public class CacheHelper
     {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using TokenAndSignature.Models;
-using TokenAndSignature.Tools;
+using TokenAndSignature.Utils;
 
 namespace TokenAndSignature.Controllers
 {
